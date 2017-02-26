@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.bala.neela.grpc";
+option java_outer_classname = "NeelaProto";
+
+package neela;
+
+service Neela {
+  rpc Bootstrap (PeerRegister) returns (PeerRegister) {}
+  rpc Browse (PeerInfo) returns (BrowseOutput) {}
+}
+
+message PeerInfo {
+  string hostAddress = 1;
+}
+
+message PeerRegister {
+  repeated PeerInfo knownPeers = 1;
+}
+
+message BrowseOutput {
+  repeated string filenames = 1;
+}

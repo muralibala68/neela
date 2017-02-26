@@ -1,0 +1,31 @@
+# .my_bashrc
+#
+# author: murali
+# date  : 18-Feb-2017
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific aliases and functions
+export PS1="[\t][\u@\h:\w]\$ "
+set -o vi
+
+# Java
+#
+export JAVA_HOME=/c/Program\ Files/Java/jdk1.8.0_121
+export PATH=${JAVA_HOME}/bin:${PATH}
+
+# Maven
+#
+export MAVEN_HOME=/c/users/murali/util/apache-maven-3.3.9
+export MAVEN_REPO=/c/users/murali/.m2/repository
+export MAVEN_OPTS="-Xms1024m -Xmx1024m -Duser.home=/c/users/murali"
+export M2_HOME=${MAVEN_HOME}
+export M2_REPO=${MAVEN_REPO}
+export PATH=${PATH}:${MAVEN_HOME}/bin
+
+#
+# End
+
