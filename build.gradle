@@ -65,3 +65,26 @@ eclipse {
 	sourceSets.main.java.srcDirs += 'build/generated/source/proto/main/java'
 	sourceSets.main.java.srcDirs += 'build/generated/source/proto/main/grpc'
 }
+
+task printSourceSets {
+	sourceSets.each {
+		println it
+	}
+}
+
+task ListJars {
+	doLast {
+		configurations.testCompile.each { File file -> println file.name }
+	}
+}
+
+task fatJar(type: Jar) {
+	manifest {
+		attributes 'Implementation-Title': 'Neela',
+		           'Implementation-Version': version,
+				   'Main-Class': 'org.bala.neela.fs.Neela'
+	}
+	baseName = project.name + '-all'
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+}
