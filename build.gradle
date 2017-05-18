@@ -1,6 +1,6 @@
 apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'com.google.protobuf'
+apply plugin: 'eclipse'
 
 group = 'org.bala.neela'
 version = '1.0-SNAPSHOT'
@@ -59,4 +59,9 @@ protobuf {
       		grpc {}
     	}
   	}
+}
+
+eclipse {
+	sourceSets.main.java.srcDirs += 'build/generated/source/proto/main/java'
+	sourceSets.main.java.srcDirs += 'build/generated/source/proto/main/grpc'
 }
