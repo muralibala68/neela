@@ -5,19 +5,19 @@ apply plugin: 'eclipse'
 group = 'org.bala.neela'
 version = '1.0-SNAPSHOT'
 
-description = """neela"""
+description = 'Neela'
 
 def jdkVersion = '1.8'
 sourceCompatibility = "${jdkVersion}"
 targetCompatibility = "${jdkVersion}"
 
 buildscript {
-  	repositories {
-    	mavenCentral()
-  	}
-  	dependencies {
-    	classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
-  	}
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
+    }
 }
 
 repositories {
@@ -46,45 +46,45 @@ dependencies {
 }
 
 protobuf {
-	protoc {
-    	artifact = "com.google.protobuf:protoc:3.2.0"
-  	}
-  	plugins {
-    	grpc {
-      		artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
-    	}
-  	}
-  	generateProtoTasks {
-    	all()*.plugins {
-      		grpc {}
-    	}
-  	}
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.2.0"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
 }
 
 eclipse {
-	sourceSets.main.java.srcDirs += 'build/generated/source/proto/main/java'
-	sourceSets.main.java.srcDirs += 'build/generated/source/proto/main/grpc'
+    sourceSets.main.java.srcDirs += 'build/generated/source/proto/main/java'
+    sourceSets.main.java.srcDirs += 'build/generated/source/proto/main/grpc'
 }
 
 task printSourceSets {
-	sourceSets.each {
-		println it
-	}
+    sourceSets.each {
+        println it
+    }
 }
 
 task ListJars {
-	doLast {
-		configurations.testCompile.each { File file -> println file.name }
-	}
+    doLast {
+        configurations.testCompile.each { File file -> println file.name }
+    }
 }
 
 task fatJar(type: Jar) {
-	manifest {
-		attributes 'Implementation-Title': 'Neela',
-		           'Implementation-Version': version,
-				   'Main-Class': 'org.bala.neela.fs.Neela'
-	}
-	baseName = project.name + '-all'
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-	with jar
+    manifest {
+        attributes 'Implementation-Title': 'Neela',
+                   'Implementation-Version': version,
+                   'Main-Class': 'org.bala.neela.fs.Neela'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
