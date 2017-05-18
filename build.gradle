@@ -72,7 +72,7 @@ task printSourceSets {
     }
 }
 
-task ListJars {
+task ListDependency {
     doLast {
         configurations.testCompile.each { File file -> println file.name }
     }
@@ -87,4 +87,17 @@ task fatJar(type: Jar) {
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
+}
+
+task removeEclipseWarnings {
+    doLast {
+        FileTree tree = fileTree('build/generated/source/proto/main/grpc').include('**/*.java') +
+                        fileTree('build/generated/source/proto/main/java').include('**/*.java')
+
+        tree.each {File file ->
+            println file
+            ant.replace(file: file, token: "public final class", value: "@SuppressWarnings(\"all\") public   final class")
+            ant.replace(file: file, token: "public  final class", value: "@SuppressWarnings(\"all\") public   final class")
+        }
+    }
 }
